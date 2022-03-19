@@ -7,7 +7,7 @@ In today's world, the interaction of images and text can be used to accomplish a
 # Related Work
 There have been several models designed to extract patterns from photos throughout history. The Convolutional Neural Network [1] is one of the major phases in extracting features from images as it allows the model to collect local information. 
 
-A big move from the past is transfer learning., Transfer learning allows us to apply pre-trained models for our specific purpose [2]. We use the pretrained model ResNet 101 [3] in our study because it has demonstrated its capacity to perform numerous vision-related tasks.
+A big move from the past is transfer learning., Transfer learning allows us to apply pre-trained models for our specific purpose [2]. We use the pretrained model ResNet-101 [3] in our study because it has demonstrated its capacity to perform numerous vision-related tasks.
 
 In terms of language processing, recurrent models demonstrate the ability to cope with sequences of varying lengths. LSTM is a good option to mention since it deals with both long-term and short-term dependencies within a sequence, making it a good model for extracting information from languages for a variety of purposes, including language generation [4].
 
@@ -20,23 +20,27 @@ The COCO dataset contains 164K images, which were divided into training data, va
 
 As for captions, we used Karpathy's split, as it is a better format than the original COCO captions. This split was made by Karpathy and Li (2015), which divided the COCO 2014 validation data into new validation and test sets of 5000 images, as well as a "restval" set that contained the remaining approximately 30k images. Annotations are present on every split. Therefore, the .json file we got from Karpathy's split will act as "annotations". The "annotations" portion can be downloaded here: [http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip]
 
-# Model Architecture
+# Experiment
+## Data Preprocessing
+The data preprocessing procedure would be described as follow:
+1. Get the images and captions from the source
+2. Map all captions with the corresponding "image paths". A note here is that we use "image paths" instead of original images. This is because from experimenting, we notice that loading the image directly even though could boost our efficiency in term of data loading, however, it would consume a huge portion of memory, which does not worth it. To deal with the problem of image size, we decided to store the paths of images and use the path as a representation of the image. Only when we call "getitem" (which is expected to be called within a particular batch during training and evaluating), we would load the image from the provided path. A tradeoff here is that it takes us more time during training and evaluating to load the images, however, we can save a lot of memory for our other tasks (such as increasing model complexity).
+3. Create a torch.Dataset object to store the images with the corresponding captions. Note here that each image has around 5 captions, so we decide to each pair of image-caption independently. That mean, when we call "getitem" to get an instance from our dataset, we would get a caption with its corresponding image.
+
+By following the steps described above, we have our data stored in the torch.Dataset objects for training and evaluating.
+## Model Architecture
 In our project, we utilize the encoder-decoder mechanism to extract the features from images with encoder block, then "decode" the images features with text with decoder block. An overal view of our moodel is shown below:
 ![Model architecture](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/Model-architecture.png?raw=true)
 
-## Encoder
-For encoder, we use a block of pretrained ResNet with its linear and pool layers removed (as we do not need the classification task) followed by a adaptive pool layer to resize our latent features to a particular size. Using this architecture, our encoder would outputs "images" of dimension (2048, 14, 14).
+### Encoder
+For encoder, we use a block of pretrained ResNet-101 with its linear and pool layers removed (as we do not need the classification task) followed by a adaptive pool layer to resize our latent features to a particular size. Using this architecture, our encoder would outputs "images" of dimension (2048, 14, 14).
 
-## Decoder
+### Decoder
+For decoder, we use "LSTM with Attention" blocks to learn the languages and learn which part of the image should the model focus for each token. Particularly, from the encoder, we receive the feature extraction of dimension (2048, 14, 14). We then transform the image to the dimension of our hidden layer and concat the transformed feature with the embedding of our "\<start\>" token. Then, for each step of decoding, we do as follow: (1) Get the embedding of the next token; (2) Compute the attention weight encoding between the image and the token to see which part of the image should the model focus on to generate the word; (3) Pass the concatenated result to our LSTM cell; (4) Predict the next token from our LSTM cell (note that each LSTM cell would receive information from the input concatenation and the previous LSTM cell).
 
-Several methods have been proposed for generating image descriptions. Many of these methods are based on recurrent neural networks and inspired by the successful use of sequence to sequence training with neural networks for machine translation (Cho et al., 2014;Bahdanau et al., 2014;
-Sutskever et al., 2014). One major reason image caption
-generation is well suited to the encoder-decoder framework
-(Cho et al., 2014) of machine translation is because it is
-analogous to “translating” an image to a sentence.
-
-Thus, the task of image captioning can be logically divided into two parts where the first part is an image-based model that is responsible for extracting the features and nuances of an image, and the second part is a language-based model that translates the objects and features given by the image-based model to a natural sentence. (*)
-
+## Training & Evaluating
+    
+## Text generating
 
 # Concepts
 - Encoder-Decoder architecture: An Encoder is used to encode the input into a fixed form that the machine can use and an Decoder is used to decode that input, word by word, into a sequence.
