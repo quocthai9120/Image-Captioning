@@ -35,12 +35,12 @@ By following the steps described above, we have our data stored in the torch.Dat
 ![Data Examples](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/example_images_with_captions.png?raw=true)
 
 ## Pre-process caption data:
-- Add `<start>` and `<end>` tokens. We want to let the decoder learns where to start and end a particular sequence sequence, so we decide to add to our captions `<start>` and `<end>` tokens, making the format of each captioon becomes `<start>`[`caption`]`<end>`. Furthermore, as we pass the captions around as fixed size Tensors, we need to pad captions (which are naturally of varying length) to the same length with `<pad>` tokens.
+- Add `<start>` and `<end>` tokens. We want to let the decoder learns where to start and end a particular sequence sequence, so we decide to add to our captions `<start>` and `<end>` tokens, making the format of each caption becomes `<start>`[`caption`]`<end>`. Furthermore, as we pass the captions around as fixed size Tensors, we need to pad captions (which are naturally of varying length) to the same length with `<pad>` tokens.
 - Processing format: captions fed to the model must be an `Int` tensor of dimension `N, L` where `L` is the padded length.
 - Tokenization: We created a dictionary that maps all unique words to a numberical index. Thus, every word we come across will have a corresponding integer value that can be found in this dictionary.
 
 ## Image transformation & normalization:
-To improve the model quality, it is reasonable to have the images have similar format. We decide to reach this goal by performing transformation and normalization to the images. Particularly, for each image, we resize it to a unique size of (256 x 256), then normalize it using the mean and standard deviation of ImageNet. Here, resizing the images to a unique size would make our model learns easier, and normalizing it using the mean and standard deviation of ImageNet is reasonable since the ImageNet dataset contains millions of images, making the mean and standard deviation a great value for normalizatioon. Below, we would include a table containing the mean and standard deviation of each channel:
+To improve the model quality, it is reasonable to have the images with similar format. We decide to reach this goal by performing transformation and normalization to the images. Particularly, for each image, we resize it to a unique size of (256 x 256), then normalize it using the mean and standard deviation of ImageNet. Here, resizing the images to a unique size would make our model learns easier, and normalizing it using the mean and standard deviation of ImageNet is reasonable since the ImageNet dataset contains millions of images, making the mean and standard deviation a great value for normalizatioon. Below, we would include a table containing the mean and standard deviation of each channel:
 
 |                    | Channel 1 | Channel 2 | Channel 3 |
 |--------------------|-----------|-----------|-----------|
@@ -139,7 +139,7 @@ We decided to use Beam search to generate the captions with the highest sequence
 ![plane_demo.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/planes.png?raw=true)
 
 # Conclusion
-We have seen that our model has work relatively well in the task of generating image captions. The text generated are shown to be somehow cohesive and contain some meaningful information about the images, which is a great sign. Even though our performance in terms of numerical is not significantly high, we believe this is a great start for the image captioning task. For upcoming work, we are going to improve the model and make it able to generate caption in a broader range of domains to server a broader group of people.
+We have seen that our model has worked relatively well in the task of generating image captions. The texts generated are shown to be somehow cohesive and contain some meaningful information about the images, which is a great sign. Even though our performance in terms of numerical is not significantly high, we believe this is a great start for the image captioning task. For upcoming work, we are going to improve the model and make it able to generate caption in a broader range of domains to serve a broader group of people.
 
 # Discussion
 ## What problems did you encounter?
