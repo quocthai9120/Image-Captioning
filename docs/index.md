@@ -102,16 +102,17 @@ In both phases, we use the Adam optimizer and Cross-Entropy loss as optimizer an
 | Batch size                                             	| 32   	|
 |--------------------------------------------------------	|------	|
 | Initial Decoder Learning rate (decoder training phase) 	| 1e-3 	|
-| Number of epochs for training decoder                  	| 10   	|
+| Number of epochs for training decoder                  	| 8   	|
 | Initial Encoder Learning rate (finetune phase)         	| 1e-5 	|
 | Initial Decoder Learning rate (finetune phase)         	| 1e-5 	|
-| Number of epochs for training end-to-end               	| 5    	|
+| Number of epochs for training end-to-end               	| 4    	|
 | Weight decay                                           	| 0.8  	|
 
 Training as described above gives us the final model.
 
 ## Evaluating
 Using the trained model and evaluating it on our unseen data, we received the following performance:
+
 |                  	| Validation data 	| Test data 	|
 |------------------	|-----------------	|-----------	|
 | Final loss       	| 4.150010        	| 4.22226   	|
@@ -155,7 +156,11 @@ We used "PyTorch" as the framework for implmenting our models. All of the code a
 
 # References
 [1] Gu, J., Wang, Z., Kuen, J., Ma, L., Shahroudy, A., Shuai, B., ... & Chen, T. (2018). Recent advances in convolutional neural networks. Pattern Recognition, 77, 354-377.
+
 [2] Zhuang, F., Qi, Z., Duan, K., Xi, D., Zhu, Y., Zhu, H., ... & He, Q. (2020). A comprehensive survey on transfer learning. Proceedings of the IEEE, 109(1), 43-76.
+
 [3] He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 770-778).
+
 [4] Sepp Hochreiter, Jürgen Schmidhuber; Long Short-Term Memory. Neural Comput 1997; 9 (8): 1735–1780. doi: https://doi.org/10.1162/neco.1997.9.8.1735.
+
 [5] Sutskever, I., Vinyals, O., & Le, Q. V. (2014). Sequence to sequence learning with neural networks. Advances in neural information processing systems, 27.
