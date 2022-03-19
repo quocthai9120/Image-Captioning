@@ -7,7 +7,7 @@ In today's world, the interaction of images and text can be used to accomplish a
 # Related Work
 There have been several models designed to extract patterns from photos throughout history. The Convolutional Neural Network [1] is one of the major phases in extracting features from images as it allows the model to collect local information. 
 
-A big move from the past is transfer learning., Transfer learning allows us to apply pre-trained models for our specific purpose [2]. We use the pretrained model ResNet-101 [3] in our study because it has demonstrated its capacity to perform numerous vision-related tasks.
+A big move from the past is transfer learning. Transfer learning allows us to apply pre-trained models for our specific purpose [2]. We use the pretrained model ResNet-101 [3] in our study because it has demonstrated its capacity to perform numerous vision-related tasks.
 
 In terms of language processing, recurrent models demonstrate the ability to cope with sequences of varying lengths. LSTM is a good option to mention since it deals with both long-term and short-term dependencies within a sequence, making it a good model for extracting information from languages for a variety of purposes, including language generation [4].
 
@@ -16,7 +16,7 @@ Finally, the encoder-decoder mechanism [5] enables the ability to connect distin
 # Dataset
 In our project, we used the "Common Objects in Context" (COCO) 2014 dataset for images and Karpathy's split for captions.
 
-The COCO dataset contains 164K images, which were divided into training data, validation data, and testing data as 83K/41K/41K. Each image is a three-channel RGB image of an object from one of 91 subcategories. categories. The dataset can be downloaded at: [https://cocodataset.org/#download](https://cocodataset.org/#download).
+The COCO dataset contains 164K images, which were divided into training data, validation data, and testing data as 83K/41K/41K. Each image is a three-channel RGB image of an object from one of 91 categories. The dataset can be downloaded at: [https://cocodataset.org/#download](https://cocodataset.org/#download).
 
 As for captions, we used Karpathy's split, as it is a better format than the original COCO captions. This split was made by Karpathy and Li (2015), which divided the COCO 2014 validation data into new validation and test sets of 5000 images, as well as a "restval" set that contained the remaining approximately 30k images. Annotations are present on every split. Therefore, the .json file we got from Karpathy's split will act as "annotations". The "annotations" portion can be downloaded here: [http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip](http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip)
 
@@ -77,54 +77,30 @@ Below is the visualization of the procedure:
 
 For a more detail summary of the decoder, we would put it below:
 
+# Training & Evaluating
+## Training
+We divide our training process into 2 phases: (1) Training the decoder to get the sense of language and connection between images and languages; (2) Finetuning the full model end-to-end to get closer to our data attribute.
 
-## Training & Evaluating
-    
-## Text generating
+In both phases, we use the Adam optimizer and Cross-Entropy loss as optimizer and learning objective for our model. We train as follow to reach convergence:
 
-### Beam Search
-We do not want to decide until we've finished decoding completely since we want to choose the sequence with the highest overall score. Thus, we would like to use Beam Search to assist us in implementing this purpose.
+| Batch size                                             	| 32   	|
+|--------------------------------------------------------	|------	|
+| Initial Decoder Learning rate (decoder training phase) 	| 1e-3 	|
+| Number of epochs for training decoder                  	| 15   	|
+| Initial Encoder Learning rate (finetune phase)         	| 1e-5 	|
+| Initial Decoder Learning rate (finetune phase)         	| 1e-5 	|
+| Number of epochs for training end-to-end               	| 5    	|
+| Weight decay                                           	| 0.8  	|
 
-The general process of Beam Search is as follows:
-- At the first decoding step, consider the top `k` candidates.
-- Generate `k` second words for each of those `k` first words.
-- Choose the top `k` [first word, second word] combinations considering additive scores.
-- For each of these `k` second words, choose `k` third words and choose the top `k` [first word, second word, third word] combinations.
-- Repeat at each decoding step.
-- After `k` sequences terminate, choose the sequence with the highest overall score.
+Training as described above gives us the final model.
 
-![beam_search.png](./images/beam_search.png)
-Some sequences (striked out) may fail early, as they don't make it to the top k at the next step. Once k sequences (underlined) generate the `<end>` token, we choose the one with the highest score.
+## Evaluating
+Using the trained model and evaluating it on our unseen test data, we received the following performance:
 
-# Training
-We train our model using Google Collaborative GPU.
-## Hyperparameters:
-- Optimizer: Adam optimizer.
-- Criterion: Cross-Entropy loss.
-## Training Result:
-After training over 50 epochs, our result are as follows:
-### Train Loss
-<p align="center">
-<img src="./images/train_loss.png">
-</p>
 
-### Train Accuracy
-<p align="center">
-<img src="./images/train_accuracy.png">
-</p>
+# Text generating
+We decided to use Beam search to generate the captions with the highest sequence score. In our experiment, we decide to make `beam_size = 5`. A few captions generated by our moodel are shown below: the top k at the next step. Once k sequences (underlined) generate the `<end>` token, we choose the one with the highest score.
 
-### Val Loss
-<p align="center">
-<img src="./images/val_loss.png">
-</p>
-
-### Val Accuracy
-<p align="center">
-<img src="./images/val_accuracy.png">
-</p>
-
-# Evaluation
-We used BLEU4 score to evaluate our model. After 50 epochs, our BLEU4 score ended up to be 0.1559.
 
 # Demo
 ![plane_demo.png](./images/demo_plane.png)
@@ -151,6 +127,9 @@ In the video, we have done the following steps:
 
 # Video
 We also include a 3-minute long video where we explained our project. Readers can access our video here: ![Summarizing Video]().
+
+# Acknowledgement
+We used "PyTorch" as the framework for implmenting our models. All of the code are written manually with references to several of paper mentioned in the references. Particularly, we mainly refer to the paper "Show, Attend and Tell: Neural Image Caption Generation with Visual Attention" [6](https://arxiv.org/pdf/1502.03044.pdf) to form and finetune our model architecture and refer to the following [GitHub repo](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning) for some engineering aspect to parallelize our training procedure.
 
 # References
 [1] Gu, J., Wang, Z., Kuen, J., Ma, L., Shahroudy, A., Shuai, B., ... & Chen, T. (2018). Recent advances in convolutional neural networks. Pattern Recognition, 77, 354-377.
