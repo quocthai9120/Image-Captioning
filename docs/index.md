@@ -155,7 +155,7 @@ For the upcoming steps, we would want to try some pretrained models for language
 Our approach is differ from others since we have been trying so hard to optimize the resources needed to use when training model. By using pretrained models, we have shown that we only need 10000 training data to make our model works relatively well like this. We also have tried to optimize the memory needed to be used at once by storing images using paths and used small batch size to train. Altogether, our approach would be friendly to use for people with few training data and low resources (they can also easily change pre-trained ResNet-101 to a smaller CNN model too).
 
 # Video
-We also include a 3-minute long video where we explained our project with a little demo at the end. Readers can access our video here: ![Summarizing Video]().
+We also include a 3-minute long video where we explained our project with a little demo at the end. Readers can access our video here: [Summarizing Video](https://youtu.be/c59O3iACjdc).
 
 # Acknowledgement
 We used "PyTorch" as the framework for implmenting our models. All of the code are written manually with references to several of paper mentioned in the references. Particularly, we mainly refer to the paper [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](https://arxiv.org/pdf/1502.03044.pdf) [6] to form and finetune our model architecture and refer to the following [GitHub repo](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning) [7] for some engineering aspect to parallelize our training procedure.
