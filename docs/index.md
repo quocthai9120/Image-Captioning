@@ -5,14 +5,13 @@ Authors: Thai Hoang, Van Quach
 In today's world, the interaction of images and text can be used to accomplish a variety of tasks. On the one hand, adding text to images can make them considerably more readable for both humans and computers. Image captioning, which is described as the task of automatically creating written descriptions for images, could help to improve this experience. Because it necessitates tackling the challenge of determining items inside an image as well as conveying the relationships between those things in natural language, it combines expertise of both computer vision and natural language processing. Image captioning is also thought to aid in the development of assistive devices that remove technological hurdles for visually impaired persons.
 
 # Related Work
-There have been several models designed to extract patterns from photos throughout history. The Convolutional Neural Network [citation] is one of the major phases in extracting features from images as it allows the model to collect local information. 
+There have been several models designed to extract patterns from photos throughout history. The Convolutional Neural Network [1] is one of the major phases in extracting features from images as it allows the model to collect local information. 
 
-A big move from the past is transfer learning. Transfer learning allows us to apply pre-trained models for our specific purpose [reference transfer learning]. We use the pretrained model ResNet 101 [citation] in our study because it has demonstrated its capacity to perform numerous vision-related tasks.
+A big move from the past is transfer learning., Transfer learning allows us to apply pre-trained models for our specific purpose [2]. We use the pretrained model ResNet 101 [3] in our study because it has demonstrated its capacity to perform numerous vision-related tasks.
 
-In terms of language processing, recurrent models demonstrate the ability to cope with sequences of varying lengths. LSTM is a good option to mention since it deals with both long-term and short-term dependencies within a sequence, making it a good model for extracting information from languages for a variety of purposes, including language generation [cite LSTM].
+In terms of language processing, recurrent models demonstrate the ability to cope with sequences of varying lengths. LSTM is a good option to mention since it deals with both long-term and short-term dependencies within a sequence, making it a good model for extracting information from languages for a variety of purposes, including language generation [4].
 
-Finally, the encoder-decoder mechanism [citation for encoder-decoder] enables the ability to connect distinct parts together to form a greater task. The release of the encoder-decoder techniques opens the path for a lots of tasks, including connecting "vision" and "languages" together.
-
+Finally, the encoder-decoder mechanism [5] enables the ability to connect distinct parts together to form a greater task. The release of the encoder-decoder techniques opens the path for a lots of tasks, including connecting "vision" and "languages" together.
 
 # Dataset
 In our project, we used the "Common Objects in Context" (COCO) 2014 dataset for images and Karpathy's split for captions.
@@ -21,10 +20,9 @@ The COCO dataset contains 164K images, which were divided into training data, va
 
 As for captions, we used Karpathy's split, as it is a better format than the original COCO captions. This split was made by Karpathy and Li (2015), which divided the COCO 2014 validation data into new validation and test sets of 5000 images, as well as a "restval" set that contained the remaining approximately 30k images. Annotations are present on every split. Therefore, the .json file we got from Karpathy's split will act as "annotations". The "annotations" portion can be downloaded here: [http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip]
 
-
 # Model Architecture
-Here, we use the encoder-decoder mechanism by using the encoder to get the abstracted features from the images, then using the decoder to learn the languages and connect language with the images. An overal view of our moodel is shown below:
-[Diagram of model]
+In our project, we utilize the encoder-decoder mechanism to extract the features from images with encoder block, then "decode" the images features with text with decoder block. An overal view of our moodel is shown below:
+![Model architecture](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/Model-architecture.png?raw=true)
 
 ## Encoder
 For encoder, we use a block of pretrained ResNet with its linear and pool layers removed (as we do not need the classification task) followed by a adaptive pool layer to resize our latent features to a particular size. Using this architecture, our encoder would outputs "images" of dimension (2048, 14, 14).
@@ -172,19 +170,8 @@ We used BLEU4 score to evaluate our model. After 50 epochs, our BLEU4 score ende
 The video description of this project can be found here.
 
 # References
-sgrvinod. (n.d.). sgrvinod/a-pytorch-tutorial-to-image-captioning: Show, attend, and tell: A pytorch tutorial to image captioning. GitHub. Retrieved March 18, 2022, from https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning 
-
-K. Xu, J. Ba, R. Kiros, A. Courville, R. Salakhutdinov, R. Zemel, and
-Y. Bengio, “Show, attend and tell: Neural image caption generation
-with visual attention,” ICML, 2015.
-
-O. Vinyals, A. Toshev, S. Bengio, D. Erhan, "Show and Tell: Lessons learned from the 2015
-MSCOCO Image Captioning Challenge," 2016. https://arxiv.org/pdf/1609.06647.pdf
-
-O. Vinyals, A. Toshev, S. Bengio, D. Erhan, "Show and Tell: A Neural Image Caption Generator," 2016. https://arxiv.org/pdf/1411.4555.pdf
-
-D. Bahdanau, K. Cho, Y. Bengio, "Neural Machine Translation by Jointly Learning to Align and Translate," ICLR, 2015.
-
-Haoran Wang, Yue Zhang, Xiaosheng Yu, "An Overview of Image Caption Generation Methods", Computational Intelligence and Neuroscience, vol. 2020, Article ID 3062706, 13 pages, 2020. https://doi.org/10.1155/2020/3062706
-
-Yan Chu, Xiao Yue, Lei Yu, Mikhailov Sergei, Zhengkui Wang, "Automatic Image Captioning Based on ResNet50 and LSTM with Soft Attention", Wireless Communications and Mobile Computing, vol. 2020, Article ID 8909458, 7 pages, 2020. https://doi.org/10.1155/2020/8909458
+[1] Gu, J., Wang, Z., Kuen, J., Ma, L., Shahroudy, A., Shuai, B., ... & Chen, T. (2018). Recent advances in convolutional neural networks. Pattern Recognition, 77, 354-377.
+[2] Zhuang, F., Qi, Z., Duan, K., Xi, D., Zhu, Y., Zhu, H., ... & He, Q. (2020). A comprehensive survey on transfer learning. Proceedings of the IEEE, 109(1), 43-76.
+[3] He, K., Zhang, X., Ren, S., & Sun, J. (2016). Deep residual learning for image recognition. In Proceedings of the IEEE conference on computer vision and pattern recognition (pp. 770-778).
+[4] Sepp Hochreiter, Jürgen Schmidhuber; Long Short-Term Memory. Neural Comput 1997; 9 (8): 1735–1780. doi: https://doi.org/10.1162/neco.1997.9.8.1735.
+[5] Sutskever, I., Vinyals, O., & Le, Q. V. (2014). Sequence to sequence learning with neural networks. Advances in neural information processing systems, 27.
