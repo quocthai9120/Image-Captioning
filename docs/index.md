@@ -148,7 +148,7 @@ We also include a 3-minute long video where we explained our project with a litt
 # Acknowledgement
 We used "PyTorch" as the framework for implmenting our models. All of the code are written manually with references to several of paper mentioned in the references. Particularly, we mainly refer to the paper [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](https://arxiv.org/pdf/1502.03044.pdf) [6] to form and finetune our model architecture and refer to the following [GitHub repo](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning) [7] for some engineering aspect to parallelize our training procedure.
 
-Our codes can be viewed at: ![Notebook](https://github.com/quocthai9120/Image-Captioning/blob/main/COCO_Image_Captioning.ipynb)
+Our codes can be viewed at: [Notebook](https://github.com/quocthai9120/Image-Captioning/blob/main/COCO_Image_Captioning.ipynb)
 
 # References
 [1] Gu, J., Wang, Z., Kuen, J., Ma, L., Shahroudy, A., Shuai, B., ... & Chen, T. (2018). Recent advances in convolutional neural networks. Pattern Recognition, 77, 354-377.
