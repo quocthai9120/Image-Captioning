@@ -140,24 +140,13 @@ We decided to use Beam search to generate the captions with the highest sequence
 ![plane_demo.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/planes.png?raw=true)
 
 # Conclusion
-
-
-
-
-# Demo
-Below, we are showing a demo of how to use our trained model for translation. Simply, you can just load the trained model and use that trained model for caption generating as the following video (click on the thumbnail to see the video): ![Demo video]().
-
-In the video, we have done the following steps:
-
-1. Load the trained model
-2. Run the code of implementing generating caption method
-3. Generating captions for a few inputted images
+We have seen that our model has work relatively well in the task of generating image captions. The text generated are shown to be somehow cohesive and contain some meaningful information about the images, which is a great sign. Even though our performance in terms of numerical is not significantly high, we believe this is a great start for the image captioning task. For upcoming work, we are going to improve the model and make it able to generate caption in a broader range of domains to server a broader group of people.
 
 # Video
-We also include a 3-minute long video where we explained our project. Readers can access our video here: ![Summarizing Video]().
+We also include a 3-minute long video where we explained our project with a little demo at the end. Readers can access our video here: ![Summarizing Video]().
 
 # Acknowledgement
-We used "PyTorch" as the framework for implmenting our models. All of the code are written manually with references to several of paper mentioned in the references. Particularly, we mainly refer to the paper [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](https://arxiv.org/pdf/1502.03044.pdf) to form and finetune our model architecture and refer to the following [GitHub repo](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning) for some engineering aspect to parallelize our training procedure.
+We used "PyTorch" as the framework for implmenting our models. All of the code are written manually with references to several of paper mentioned in the references. Particularly, we mainly refer to the paper [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](https://arxiv.org/pdf/1502.03044.pdf) [6] to form and finetune our model architecture and refer to the following [GitHub repo](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning) [7] for some engineering aspect to parallelize our training procedure.
 
 Our codes can be viewed at: ![Notebook](https://github.com/quocthai9120/Image-Captioning/blob/main/COCO_Image_Captioning.ipynb)
 
@@ -171,3 +160,7 @@ Our codes can be viewed at: ![Notebook](https://github.com/quocthai9120/Image-Ca
 [4] Sepp Hochreiter, Jürgen Schmidhuber; Long Short-Term Memory. Neural Comput 1997; 9 (8): 1735–1780. doi: https://doi.org/10.1162/neco.1997.9.8.1735.
 
 [5] Sutskever, I., Vinyals, O., & Le, Q. V. (2014). Sequence to sequence learning with neural networks. Advances in neural information processing systems, 27.
+
+[6] Xu, K., Ba, J., Kiros, R., Cho, K., Courville, A., Salakhudinov, R., ... & Bengio, Y. (2015, June). Show, attend and tell: Neural image caption generation with visual attention. In International conference on machine learning (pp. 2048-2057). PMLR.
+
+[7] Vinodababu, S. (2022, March 17). Contents. GitHub. https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning
