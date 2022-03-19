@@ -32,7 +32,7 @@ The data preprocessing procedure would be described as follow:
 3. Create a torch.Dataset object to store the images with the corresponding captions. Note here that each image has around 5 captions, so we decide to each pair of image-caption independently. That mean, when we call "getitem" to get an instance from our dataset, we would get a caption with its corresponding image. We will discuss more detail of how we process captions and images data in the next subsections.
 
 By following the steps described above, we have our data stored in the torch.Dataset objects for training, validating, and testing. Below are a few example from our dataset with images map with corresponding captions:
-![Data Examples](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/example_images_with_captions.png)
+![Data Examples](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/example_images_with_captions.png?raw=true)
 
 ## Pre-process caption data:
 - Add `<start>` and `<end>` tokens. We want to let the decoder learns where to start and end a particular sequence sequence, so we decide to add to our captions `<start>` and `<end>` tokens, making the format of each captioon becomes `<start>`[`caption`]`<end>`. Furthermore, as we pass the captions around as fixed size Tensors, we need to pad captions (which are naturally of varying length) to the same length with `<pad>` tokens.
@@ -73,7 +73,7 @@ Here, the most interesting part of our decoder is how we use attention mechanism
 7. Keep doing so until generating the \<end\> token.
 
 Below is the visualization of the procedure: 
-![Attention Mechanism](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/attention_decoder.png)
+![Attention Mechanism](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/attention_decoder.png?raw=true)
 
 For a more detail summary of the decoder, we would put it below:
 
@@ -94,7 +94,7 @@ The general process of Beam Search is as follows:
 - After `k` sequences terminate, choose the sequence with the highest overall score.
 
 ![beam_search.png](./images/beam_search.png)
-Some sequences (striked out) may fail early, as they don't make it to the top k at the next step. Once k sequences (underlined) generate the <end> token, we choose the one with the highest score.
+Some sequences (striked out) may fail early, as they don't make it to the top k at the next step. Once k sequences (underlined) generate the `<end>` token, we choose the one with the highest score.
 
 # Training
 We train our model using Google Collaborative GPU.
@@ -125,9 +125,6 @@ After training over 50 epochs, our result are as follows:
 
 # Evaluation
 We used BLEU4 score to evaluate our model. After 50 epochs, our BLEU4 score ended up to be 0.1559.
-<p align="center">
-<img src="./images/bleu4_score.png">
-</p>
 
 # Demo
 ![plane_demo.png](./images/demo_plane.png)
@@ -141,8 +138,19 @@ We used BLEU4 score to evaluate our model. After 50 epochs, our BLEU4 score ende
 # Conclusion
 
 
-# Video Description
-The video description of this project can be found here.
+
+
+# Demo
+Below, we are showing a demo of how to use our trained model for translation. Simply, you can just load the trained model and use that trained model for caption generating as the following video (click on the thumbnail to see the video): ![Demo video]().
+
+In the video, we have done the following steps:
+
+1. Load the trained model
+2. Run the code of implementing generating caption method
+3. Generating captions for a few inputted images
+
+# Video
+We also include a 3-minute long video where we explained our project. Readers can access our video here: ![Summarizing Video]().
 
 # References
 [1] Gu, J., Wang, Z., Kuen, J., Ma, L., Shahroudy, A., Shuai, B., ... & Chen, T. (2018). Recent advances in convolutional neural networks. Pattern Recognition, 77, 354-377.
