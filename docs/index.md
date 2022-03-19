@@ -121,11 +121,16 @@ Using the trained model and evaluating it on our unseen data, we received the fo
 
 Below, we would also include our graphs generated throughout our training process, which can shows that we have been training until our model reaches convergence.
 
-1. Train losses: ![train_losses.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/train_losses.png?raw=true)
-2. Train accuracies: ![train_acc.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/train_acc.png?raw=true)
-3. Validation losses: ![val_losses.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/val_losses.png?raw=true)
-4. Validation accuracies: ![val_acc.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/val_acc.png?raw=true)
-5. Validation BLEU-4 score: ![val_BLEU.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/val_bleu.png?raw=true)
+### Train losses: 
+![train_losses.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/train_losses.png?raw=true)
+### Train accuracies: 
+![train_acc.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/train_acc.png?raw=true)
+### Validation losses:
+![val_losses.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/val_losses.png?raw=true)
+### Validation accuracies:
+![val_acc.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/val_acc.png?raw=true)
+### Validation BLEU-4 score:
+![val_BLEU.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/val_bleu.png?raw=true)
 
 ## Caption generating
 We decided to use Beam search to generate the captions with the highest sequence score. In our experiment, we decide to make `beam_size = 5`. We would keep generating tokens until we could generate the `<end>` token, then we choose the one with the highest score as our generated sequence.
