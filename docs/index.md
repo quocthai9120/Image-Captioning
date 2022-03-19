@@ -2,7 +2,7 @@
 Authors: Thai Hoang, Van Quach
 
 # Abstract
-In today's world, the interaction of images and text can be used to accomplish a variety of tasks. On the one hand, adding text to images can make them considerably more readable for both humans and computers. Image captioning, which is described as the task of automatically creating written descriptions for images, could help to improve this experience. Because it necessitates tackling the challenge of determining items inside an image as well as conveying the relationships between those things in natural language, it combines expertise of both computer vision and natural language processing. Image captioning is also thought to aid in the development of assistive devices that remove technological hurdles for visually impaired persons.
+In today's world, the interaction of images and text can be used to accomplish a variety of tasks. On the one hand, adding text to images can make them considerably more readable for both humans and computers. Image captioning, which is described as the task of automatically creating written descriptions for images, could help to improve this experience. Because it necessitates tackling the challenge of determining items inside an image as well as conveying the relationships between those things in natural language, it combines expertise of both computer vision and natural language processing. Image captioning is also thought to aid in the development of assistive devices that remove technological hurdles for visually impaired persons. With that context, we want to do an image captioning project in which given images to the model, it can generate relevant captions for the images.
 
 # Related Work
 There have been several models designed to extract patterns from photos throughout history. The Convolutional Neural Network [1] is one of the major phases in extracting features from images as it allows the model to collect local information. 
@@ -143,12 +143,15 @@ We have seen that our model has work relatively well in the task of generating i
 
 # Discussion
 1. What problems did you encounter?
+
 When working on the experiment, we faced two major problems. The first problem that we had was to deal with memory issue. As discussed above, initially, we decided to load all images data at once, causing the memory not able to handle all of the data. To solve this issue, we made an adjustment to our codes to only store the paths of the images so that we only need to actually load the images within each batch. This saves us much more memory for other tasks.
 
 2. Are there next steps you would take if you kept working on the project?
+
 For the upcoming steps, we would want to try some pretrained models for languages (such as BERT, ...). We believe that by using pretrained models for language, our end-to-end model would have a better understanding in languages, allowing it to generate more meaningful captions.
 
-3. How does your approach differ from others? Was that beneficial?/
+3. How does your approach differ from others? Was that beneficial?
+
 Our approach is differ from others since we have been trying so hard to optimize the resources needed to use when training model. By using pretrained models, we have shown that we only need 10000 training data to make our model works relatively well like this. We also have tried to optimize the memory needed to be used at once by storing images using paths and used small batch size to train. Altogether, our approach would be friendly to use for people with few training data and low resources (they can also easily change pre-trained ResNet-101 to a smaller CNN model too).
 
 # Video
