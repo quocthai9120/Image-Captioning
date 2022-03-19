@@ -24,7 +24,7 @@ As for captions, we used Karpathy's split, as it is a better format than the ori
 ## Data Preprocessing
 For the image captioning task, we need to preprocess both visual and textual data. This part discusses about generating the dataset containing both images and corresponding captions.
 
-Because of limitation of resources, we decided to use only 50000 image-caption pairs for training and 10000 image-caption pairs for validating. For testing, we are using the whole test set to measure the performance of our model, which contains 41000 image-caption pairs.
+Because of limitation of resources, we decided to use only 10000 image-caption pairs for training and 1000 image-caption pairs for validating. We unseen take 9000 image-caption pairs from the validating set that is not used for validating to perform a final test for our model.
 
 The data preprocessing procedure would be described as follow:
 1. Get the images and captions from the source
@@ -54,11 +54,11 @@ In our project, we utilize the encoder-decoder mechanism to extract the features
 ![Model architecture](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/Model-architecture.png?raw=true)
 
 ### Encoder
-For encoder, we use a block of pretrained ResNet-101 with its linear and pool layers removed (as we do not need the classification task) followed by a adaptive pooling layer to resize our latent features to a particular size. Using this architecture, our encoder would outputs "images" of dimension (2048, 14, 14). 
+For encoder, we use a block of pretrained ResNet-101 with its linear and pool layers removed (as we do not need the classification task) followed by a adaptive pooling layer to resize our latent features to a particular size, in which we decided to make it becomes (2048, 14, 14). Using this architecture, our encoder would outputs "images" of dimension (2048, 14, 14). 
 
 A note here is that even though we are resizing our images to a consistent image size, we still have an adaptive pooling layer here for future changes, enables the ability to modify and scale our project.
 
-For a more detail summary of the encoder, we would put it below:
+Since we used the pre-trained ResNet-101 model, we would not discuss more detail about this famous model. Instead, we do leave the reference to the original paper, which can be look at our reference [3].
 
 ### Decoder
 For decoder, we use "LSTM with Attention" blocks to learn the languages and learn which part of the image should the model focus for each token. Particularly, from the encoder, we receive the feature extraction of dimension (2048, 14, 14). We then transform the image to the dimension of our hidden layer and concat the transformed feature with the embedding of our "\<start\>" token. Then, for each step of decoding, we do as follow: (1) Get the embedding of the next token; (2) Compute the attention weight encoding between the image and the token to see which part of the image should the model focus on to generate the word; (3) Pass the concatenated result to our LSTM cell; (4) Predict the next token from our LSTM cell (note that each LSTM cell would receive information from the input concatenation and the previous LSTM cell).
@@ -76,6 +76,22 @@ Below is the visualization of the procedure:
 ![Attention Mechanism](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/attention_decoder.png?raw=true)
 
 For a more detail summary of the decoder, we would put it below:
+```python
+DecoderWithAttention(
+  (attention): Attention(
+    (encoder_attn): Linear(in_features=2048, out_features=512, bias=True)
+    (decoder_attn): Linear(in_features=512, out_features=512, bias=True)
+    (full_attn): Linear(in_features=512, out_features=1, bias=True)
+  )
+  (embedding): Embedding(9490, 512)
+  (dropout): Dropout(p=0.2, inplace=False)
+  (decode_step): LSTMCell(2560, 512)
+  (init_h): Linear(in_features=2048, out_features=512, bias=True)
+  (init_c): Linear(in_features=2048, out_features=512, bias=True)
+  (f_beta): Linear(in_features=512, out_features=2048, bias=True)
+  (fc): Linear(in_features=512, out_features=9490, bias=True)
+)
+```
 
 # Training, Evaluating, and Caption Generating
 ## Training
@@ -86,7 +102,7 @@ In both phases, we use the Adam optimizer and Cross-Entropy loss as optimizer an
 | Batch size                                             	| 32   	|
 |--------------------------------------------------------	|------	|
 | Initial Decoder Learning rate (decoder training phase) 	| 1e-3 	|
-| Number of epochs for training decoder                  	| 15   	|
+| Number of epochs for training decoder                  	| 10   	|
 | Initial Encoder Learning rate (finetune phase)         	| 1e-5 	|
 | Initial Decoder Learning rate (finetune phase)         	| 1e-5 	|
 | Number of epochs for training end-to-end               	| 5    	|
@@ -95,7 +111,12 @@ In both phases, we use the Adam optimizer and Cross-Entropy loss as optimizer an
 Training as described above gives us the final model.
 
 ## Evaluating
-Using the trained model and evaluating it on our unseen test data, we received the following performance:
+Using the trained model and evaluating it on our unseen data, we received the following performance:
+|                  	| Validation data 	| Test data 	|
+|------------------	|-----------------	|-----------	|
+| Final loss       	| 4.150010        	| 4.22226   	|
+| Final accuracy   	| 64.80002        	| 64.1432   	|
+| Final BLEU-score 	| 0.138669        	| 0.13430   	|
 
 
 ## Caption generating
@@ -103,14 +124,7 @@ We decided to use Beam search to generate the captions with the highest sequence
 
 
 # Demo
-![plane_demo.png](./images/demo_plane.png)
-
-![demo2.png](./images/demo2.png)
-
-![demo1.png](./images/demo1.png)
-
-![demo0.png](./images/demo0.png)
-
+![plane_demo.png](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/attention_decoder.png?raw=true)
 # Conclusion
 
 
@@ -129,7 +143,7 @@ In the video, we have done the following steps:
 We also include a 3-minute long video where we explained our project. Readers can access our video here: ![Summarizing Video]().
 
 # Acknowledgement
-We used "PyTorch" as the framework for implmenting our models. All of the code are written manually with references to several of paper mentioned in the references. Particularly, we mainly refer to the paper "Show, Attend and Tell: Neural Image Caption Generation with Visual Attention" [6](https://arxiv.org/pdf/1502.03044.pdf) to form and finetune our model architecture and refer to the following [GitHub repo](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning) for some engineering aspect to parallelize our training procedure.
+We used "PyTorch" as the framework for implmenting our models. All of the code are written manually with references to several of paper mentioned in the references. Particularly, we mainly refer to the paper [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](https://arxiv.org/pdf/1502.03044.pdf) to form and finetune our model architecture and refer to the following [GitHub repo](https://github.com/sgrvinod/a-PyTorch-Tutorial-to-Image-Captioning) for some engineering aspect to parallelize our training procedure.
 
 # References
 [1] Gu, J., Wang, Z., Kuen, J., Ma, L., Shahroudy, A., Shuai, B., ... & Chen, T. (2018). Recent advances in convolutional neural networks. Pattern Recognition, 77, 354-377.
