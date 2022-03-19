@@ -31,7 +31,8 @@ The data preprocessing procedure would be described as follow:
 2. Map all captions with the corresponding "image paths". A note here is that we use "image paths" instead of original images. This is because from experimenting, we notice that loading the image directly even though could boost our efficiency in term of data loading, however, it would consume a huge portion of memory, which does not worth it. To deal with the problem of image size, we decided to store the paths of images and use the path as a representation of the image. Only when we call "getitem" (which is expected to be called within a particular batch during training and evaluating), we would load the image from the provided path. A tradeoff here is that it takes us more time during training and evaluating to load the images, however, we can save a lot of memory for our other tasks (such as increasing model complexity).
 3. Create a torch.Dataset object to store the images with the corresponding captions. Note here that each image has around 5 captions, so we decide to each pair of image-caption independently. That mean, when we call "getitem" to get an instance from our dataset, we would get a caption with its corresponding image. We will discuss more detail of how we process captions and images data in the next subsections.
 
-By following the steps described above, we have our data stored in the torch.Dataset objects for training, validating, and testing.
+By following the steps described above, we have our data stored in the torch.Dataset objects for training, validating, and testing. Below are a few example from our dataset with images map with corresponding captions:
+![Data Examples](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/example_images_with_captions.png)
 
 ## Pre-process caption data:
 - Add `<start>` and `<end>` tokens. We want to let the decoder learns where to start and end a particular sequence sequence, so we decide to add to our captions `<start>` and `<end>` tokens, making the format of each captioon becomes `<start>`[`caption`]`<end>`. Furthermore, as we pass the captions around as fixed size Tensors, we need to pad captions (which are naturally of varying length) to the same length with `<pad>` tokens.
@@ -72,7 +73,7 @@ Here, the most interesting part of our decoder is how we use attention mechanism
 7. Keep doing so until generating the \<end\> token.
 
 Below is the visualization of the procedure: 
-![Attention Mechanism](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/attention_decoder.jpg)
+![Attention Mechanism](https://github.com/quocthai9120/Image-Captioning/blob/main/docs/attention_decoder.png)
 
 For a more detail summary of the decoder, we would put it below:
 
