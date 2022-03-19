@@ -142,15 +142,15 @@ We decided to use Beam search to generate the captions with the highest sequence
 We have seen that our model has work relatively well in the task of generating image captions. The text generated are shown to be somehow cohesive and contain some meaningful information about the images, which is a great sign. Even though our performance in terms of numerical is not significantly high, we believe this is a great start for the image captioning task. For upcoming work, we are going to improve the model and make it able to generate caption in a broader range of domains to server a broader group of people.
 
 # Discussion
-1. What problems did you encounter?
+## What problems did you encounter?
 
 When working on the experiment, we faced two major problems. The first problem that we had was to deal with memory issue. As discussed above, initially, we decided to load all images data at once, causing the memory not able to handle all of the data. To solve this issue, we made an adjustment to our codes to only store the paths of the images so that we only need to actually load the images within each batch. This saves us much more memory for other tasks.
 
-2. Are there next steps you would take if you kept working on the project?
+## Are there next steps you would take if you kept working on the project?
 
 For the upcoming steps, we would want to try some pretrained models for languages (such as BERT, ...). We believe that by using pretrained models for language, our end-to-end model would have a better understanding in languages, allowing it to generate more meaningful captions.
 
-3. How does your approach differ from others? Was that beneficial?
+## How does your approach differ from others? Was that beneficial?
 
 Our approach is differ from others since we have been trying so hard to optimize the resources needed to use when training model. By using pretrained models, we have shown that we only need 10000 training data to make our model works relatively well like this. We also have tried to optimize the memory needed to be used at once by storing images using paths and used small batch size to train. Altogether, our approach would be friendly to use for people with few training data and low resources (they can also easily change pre-trained ResNet-101 to a smaller CNN model too).
 
